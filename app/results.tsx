@@ -174,7 +174,7 @@ export function Results() {
           />
           <h1 className="text-xl dark:text-violet-100">farcaster channels</h1>
           <a
-            href="https://github.com/davidfurlong/farcaster-channels"
+            href="https://github.com/artlu99/farcaster-channels"
             rel="noopener noreferer"
             className="ml-auto"
           >
@@ -209,6 +209,14 @@ export function Results() {
           href="https://www.davidfurlong.me"
         >
           @df
+        </a>{" "}
+        + forked by{" "}
+        <a
+          target="_blank"
+          rel="noopener noreferer"
+          href="https://warpcast.com/artlu"
+        >
+          @artlu
         </a>
       </div>
     </div>
