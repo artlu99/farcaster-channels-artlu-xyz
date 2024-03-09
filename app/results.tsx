@@ -12,9 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  GithubIcon,
-} from "lucide-react";
+import { GithubIcon } from "lucide-react";
 import { DataTable } from "@/components/data-table";
 import { Channel } from "./types";
 
@@ -23,7 +21,7 @@ export function Results() {
   const [openChannelModal, setOpenChannelModal] = useState<Channel | null>(
     null
   );
-  
+
   useEffect(() => {
     async function fetchAsync() {
       const newResults = await fetch(
@@ -45,7 +43,9 @@ export function Results() {
     fetchAsync();
   }, []);
 
-  const dateObj = openChannelModal ? new Date(openChannelModal.created_at * 1000) : null
+  const dateObj = openChannelModal
+    ? new Date(openChannelModal.created_at * 1000)
+    : null;
 
   return (
     <div className="flex flex-col">
@@ -67,7 +67,9 @@ export function Results() {
                     /{openChannelModal.id}
                   </span>
                   <span className="italic">{openChannelModal.description}</span>
-                  <span className="text-violet-600 italic">created: {dateObj?.toLocaleDateString()}</span>
+                  <span className="text-violet-600 italic">
+                    created: {dateObj?.toLocaleDateString()}
+                  </span>
                   <div className="py-2">
                     <hr />
                   </div>
