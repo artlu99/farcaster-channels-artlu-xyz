@@ -1,10 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import Image from "next/image";
-import {
-  ArrowUpDownIcon,
-} from "lucide-react"
+import { ArrowUpDownIcon } from "lucide-react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -18,9 +16,9 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+} from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -28,14 +26,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Channel } from "@/app/types"
+} from "@/components/ui/table";
+import { Channel } from "@/app/types";
 
 const columns: ColumnDef<Channel>[] = [
   {
     accessorKey: "channel_logo",
     header: "",
-    cell: ({ row }) => channelLogo(row)
+    cell: ({ row }) => channelLogo(row),
   },
   {
     accessorKey: "name",
@@ -48,14 +46,15 @@ const columns: ColumnDef<Channel>[] = [
           name
           <ArrowUpDownIcon className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) =>
+    cell: ({ row }) => (
       <div>
         <div className="font-bold">{row.getValue("name")}</div>
         <div className="text-violet-500 italic">/{row.original.id}</div>
         {/* <div className="dark:text-violet-600 italic text-xs">{row.original.description}</div> */}
       </div>
+    ),
   },
   {
     accessorKey: "created_at",
@@ -70,23 +69,23 @@ const columns: ColumnDef<Channel>[] = [
             created_at
           </Button>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-      const timestamp = parseInt(row.getValue("created_at"))
+      const timestamp = parseInt(row.getValue("created_at"));
 
       // Format the timestamp in local time
       const date = new Date(timestamp * 1000);
       const formatted = date.toLocaleDateString();
 
-      return <div className="text-right font-medium">{formatted}</div>
+      return <div className="text-right font-medium">{formatted}</div>;
     },
   },
-]
+];
 
 const channelLogo = (row: Row<Channel>) => {
-  const {index} = row;
-  const {image_url, id} = row.original;
+  const { index } = row;
+  const { image_url, id } = row.original;
 
   return (
     <div className="w-[36px] h-[36px] flex-shrink-0">
@@ -105,23 +104,23 @@ const channelLogo = (row: Row<Channel>) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const DataTable = (props: {
-   data: Channel[],
-   onClickAction: (ch: Channel)=>void
-  }) => {
+  data: Channel[];
+  onClickAction: (ch: Channel) => void;
+}) => {
   const { data, onClickAction } = props;
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0, // initial page index
     pageSize: 50, // default page size
   });
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
-  const [rowSelection, setRowSelection] = React.useState({})
+  );
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
@@ -140,12 +139,12 @@ export const DataTable = (props: {
       rowSelection,
       pagination,
     },
-  })
+  });
 
   return (
     <div>
       <div className="flex items-center py-4">
-        {data.length ? 
+        {data.length ? (
           <Input
             autoFocus
             type="search"
@@ -154,9 +153,11 @@ export const DataTable = (props: {
               table.getColumn("name")?.setFilterValue(event.target.value)
             }
             className="w-[400px] cursor-pointer ring-violet-500 focus:ring-1 outline-none max-w-full bg-violet-50 border border-violet-200 text-violet-900 text-sm rounded focus:border-violet-300 block p-2 dark:bg-violet-950 dark:border-violet-600 dark:placeholder-violet-400 dark:text-violet-300"
-            placeholder={`Search ${data.length ? `${data.length} `: ""}channel names`}
-          /> : null
-        }
+            placeholder={`Search ${
+              data.length ? `${data.length} ` : ""
+            }channel names`}
+          />
+        ) : null}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -173,7 +174,7 @@ export const DataTable = (props: {
                             header.getContext()
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -184,7 +185,7 @@ export const DataTable = (props: {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={()=>onClickAction(row.original)}
+                  onClick={() => onClickAction(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -210,7 +211,7 @@ export const DataTable = (props: {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        { data.length > 0 ?
+        {data.length > 0 ? (
           <div className="space-x-2">
             <Button
               variant="outline"
@@ -228,9 +229,9 @@ export const DataTable = (props: {
             >
               Next
             </Button>
-          </div> : null
-        }
+          </div>
+        ) : null}
       </div>
     </div>
-  )
-}
+  );
+};
