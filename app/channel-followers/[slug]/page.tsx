@@ -51,7 +51,7 @@ export default function FollowersCSV({ params }: { params: { slug: string } }) {
           ? `${i},${channelId},${fid},${username},${verifications[0]}\n`
           : undefined;
       })
-    : "there was a problem, results not available";
+    : "Results not available (posssible cause: check Neenoo API key in deployed environment)";
 
   return (
     <div>
