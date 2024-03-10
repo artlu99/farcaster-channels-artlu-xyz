@@ -25,7 +25,7 @@ export type Channel = {
   };
 };
 
-export type UsersResponse = {
+export type UsersResponsePartial = {
   users: {
     fid: number;
     username?: string;

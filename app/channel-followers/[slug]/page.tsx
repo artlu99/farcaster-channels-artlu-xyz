@@ -1,6 +1,6 @@
 "use client";
 
-import { UsersResponse } from "@/app/types";
+import { UsersResponsePartial } from "@/app/types";
 import { useEffect, useState } from "react";
 
 export const runtime = "edge";
@@ -8,7 +8,7 @@ export const runtime = "edge";
 const api_key = process.env.NEXT_PUBLIC_NEENOO_API_KEY || "no API key";
 
 export default function FollowersCSV({ params }: { params: { slug: string } }) {
-  const [results, setResults] = useState<UsersResponse | undefined>(undefined);
+  const [results, setResults] = useState<UsersResponsePartial | undefined>(undefined);
 
   const slug = params.slug;
   const [channelId] = slug.split(".");
@@ -27,7 +27,7 @@ export default function FollowersCSV({ params }: { params: { slug: string } }) {
       );
       try {
         const newResultsJson = await newResults.json();
-        setResults(newResultsJson as UsersResponse);
+        setResults(newResultsJson as UsersResponsePartial);
       } catch (err) {
         console.error(err);
       }
