@@ -8,6 +8,7 @@ import {
 import {
   ColumnDef,
   ColumnFiltersState,
+  PaginationState,
   Row,
   SortingState,
   VisibilityState,
@@ -112,6 +113,10 @@ export const DataTable = (props: {
    onClickAction: (ch: Channel)=>void
   }) => {
   const { data, onClickAction } = props;
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0, // initial page index
+    pageSize: 50, // default page size
+  });
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -128,10 +133,12 @@ export const DataTable = (props: {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination, // update the pagination state when internal APIs mutate the pagination state
     state: {
       sorting,
       columnFilters,
       rowSelection,
+      pagination,
     },
   })
 
