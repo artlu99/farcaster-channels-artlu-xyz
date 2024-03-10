@@ -1,17 +1,9 @@
 "use client";
 
+import { UsersResponse } from "@/app/types";
 import { useEffect, useState } from "react";
 
 export const runtime = "edge";
-
-type UsersResponse = {
-  users: {
-    fid: number;
-    username?: string;
-    verifications?: string[];
-  }[];
-  next: { cursor: string };
-};
 
 const api_key = process.env.NEXT_PUBLIC_NEENOO_API_KEY || "no API key";
 

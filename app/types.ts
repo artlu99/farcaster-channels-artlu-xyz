@@ -24,3 +24,12 @@ export type Channel = {
     active_status: "active" | "inactive";
   };
 };
+
+export type UsersResponse = {
+  users: {
+    fid: number;
+    username?: string;
+    verifications?: string[];
+  }[];
+  next: { cursor: string };
+};
