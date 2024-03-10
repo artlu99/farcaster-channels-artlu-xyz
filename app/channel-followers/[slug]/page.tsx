@@ -44,7 +44,7 @@ export default function FollowersCSV({ params }: { params: { slug: string } }) {
     fetchAsync();
   }, [channelId]);
 
-  const csv = results
+  const csv = results?.users
     ? results.users.map((r, i) => {
         const { fid, username, verifications } = r;
         return verifications && verifications.length > 0
