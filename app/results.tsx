@@ -25,7 +25,7 @@ export function Results() {
   useEffect(() => {
     async function fetchAsync() {
       const newResults = await fetch(
-        `https://api.modprotocol.org/api/farcaster/channels/v2?hideVirtualChannels=true&q=`
+        `https://api.warpcast.com/v2/all-channels`
       );
       try {
         const newResultsJson = await newResults.json();
