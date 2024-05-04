@@ -25,7 +25,7 @@ export function Results() {
   useEffect(() => {
     async function fetchAsync() {
       const newResults = await fetch(
-        `https://api.warpcast.com/v2/all-channels`
+        "https://all-channels.artlu.workers.dev/"
       );
       try {
         const newResultsJson = await newResults.json();
