@@ -85,14 +85,14 @@ const columns: ColumnDef<Channel>[] = [
 
 const channelLogo = (row: Row<Channel>) => {
   const { index } = row;
-  const { image_url, id } = row.original;
+  const { imageUrl, id } = row.original;
 
   return (
     <div className="w-[36px] h-[36px] flex-shrink-0">
       <div className="w-[36px] h-[36px] absolute">
         <Image
           className="rounded-full"
-          src={image_url}
+          src={imageUrl}
           sizes="(max-width: 768px) 36px, 36px"
           priority={index < 30}
           quality={75}

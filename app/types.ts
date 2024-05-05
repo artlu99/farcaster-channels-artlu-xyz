@@ -4,12 +4,11 @@ export type Channel = {
   url: string;
   name: string;
   description: string;
-  image_url: string;
-  parent_url: string;
+  imageUrl: string;
   leadFid: number;
   hostFids: number[];
-  created_at: number;
-  follower_count: number;
+  createdAt: number;
+  followerCount: number;
 };
 
 // Neynar

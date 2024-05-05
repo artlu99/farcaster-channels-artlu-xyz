@@ -42,7 +42,7 @@ export function Results() {
   }, []);
 
   const dateObj = openChannelModal
-    ? new Date(openChannelModal.created_at * 1000)
+    ? new Date(openChannelModal.createdAt * 1000)
     : null;
 
   return (
