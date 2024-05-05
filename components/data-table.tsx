@@ -57,7 +57,7 @@ const columns: ColumnDef<Channel>[] = [
     ),
   },
   {
-    accessorKey: "created_at",
+    accessorKey: "createdAt",
     header: ({ column }) => {
       return (
         <div className="text-right">
@@ -66,13 +66,13 @@ const columns: ColumnDef<Channel>[] = [
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <ArrowUpDownIcon className="ml-2 h-4 w-4 mx-2" />
-            created_at
+            createdAt
           </Button>
         </div>
       );
     },
     cell: ({ row }) => {
-      const timestamp = parseInt(row.getValue("created_at"));
+      const timestamp = parseInt(row.getValue("createdAt"));
 
       // Format the timestamp in local time
       const date = new Date(timestamp * 1000);
