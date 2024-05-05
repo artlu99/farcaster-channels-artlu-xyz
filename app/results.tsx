@@ -24,14 +24,12 @@ export function Results() {
 
   useEffect(() => {
     async function fetchAsync() {
-      const newResults = await fetch(
-        "https://all-channels.artlu.workers.dev/"
-      );
+      const newResults = await fetch("https://all-channels.artlu.workers.dev/");
       try {
         const newResultsJson = await newResults.json();
 
         setResults(
-          (newResultsJson.channels as Channel[]).sort((a, b) =>
+          (newResultsJson.result.channels as Channel[]).sort((a, b) =>
             a.id > b.id ? 1 : -1
           )
         );
