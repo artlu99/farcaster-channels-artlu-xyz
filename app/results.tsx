@@ -41,7 +41,7 @@ export function Results() {
     fetchAsync();
   }, []);
 
-  const dateObj = openChannelModal ? new Date(openChannelModal.createdAt) : null;
+  const dateObj = openChannelModal ? new Date(openChannelModal.createdAt * 1000) : null;
 
   return (
     <div className="flex flex-col">
