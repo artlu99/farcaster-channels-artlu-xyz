@@ -43,7 +43,7 @@ const columns: ColumnDef<Channel>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          name
+          Name
           <ArrowUpDownIcon className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -57,6 +57,26 @@ const columns: ColumnDef<Channel>[] = [
     ),
   },
   {
+    accessorKey: "followerCount",
+    header: ({ column }) => {
+      return (
+        <div className="text-right">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDownIcon className="ml-2 h-4 w-4 mx-2" />
+            Followers
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const followerCount = parseInt(row.getValue("followerCount")).toLocaleString();
+      return <div className="text-right font-medium">{followerCount}</div>;
+    },
+  },
+  {
     accessorKey: "createdAt",
     header: ({ column }) => {
       return (
@@ -66,7 +86,7 @@ const columns: ColumnDef<Channel>[] = [
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <ArrowUpDownIcon className="ml-2 h-4 w-4 mx-2" />
-            createdAt
+            Created
           </Button>
         </div>
       );
@@ -114,7 +134,7 @@ export const DataTable = (props: {
   const { data, onClickAction } = props;
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0, // initial page index
-    pageSize: 50, // default page size
+    pageSize: 100,
   });
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
