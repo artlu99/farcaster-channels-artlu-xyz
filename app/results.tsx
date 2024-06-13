@@ -41,7 +41,9 @@ export function Results() {
     fetchAsync();
   }, []);
 
-  const dateObj = openChannelModal ? new Date(openChannelModal.createdAt * 1000) : null;
+  const dateObj = openChannelModal
+    ? new Date(openChannelModal.createdAt * 1000)
+    : null;
 
   return (
     <div className="flex flex-col">
@@ -152,6 +154,20 @@ export function Results() {
                       href={`https://far.quest/channel/${openChannelModal.id}`}
                     >
                       Cast by far.quest
+                    </a>
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="w-[200px] justify-start"
+                    asChild
+                  >
+                    <a
+                      target="_blank"
+                      rel="noopener noreferer"
+                      href={`https://client-bcbhshow.artlu.xyz/~/channel/${openChannelModal.id}`}
+                    >
+                      The BCBHShow Lite Client
                     </a>
                   </Button>
                 </div>
