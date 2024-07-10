@@ -159,6 +159,20 @@ export function Results() {
                   <Button
                     size="sm"
                     variant="secondary"
+                    className="w-[140px] justify-start"
+                    asChild
+                  >
+                    <a
+                      target="_blank"
+                      rel="noopener noreferer"
+                      href={`https://app.wildcard.lol/channel/${openChannelModal.id}`}
+                    >
+                      Wildcard
+                    </a>
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="secondary"
                     className="w-[200px] justify-start"
                     asChild
                   >
