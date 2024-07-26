@@ -202,7 +202,7 @@ export function Results() {
           />
           <h1 className="text-xl dark:text-violet-100">farcaster channels</h1>
           <a
-            href="https://github.com/artlu99/farcaster-channels"
+            href="https://github.com/artlu99/farcaster-channels-artlu-xyz"
             rel="noopener noreferer"
             className="ml-auto"
           >
