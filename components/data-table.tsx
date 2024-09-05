@@ -12,12 +12,14 @@ import {
   VisibilityState,
   flexRender,
   getCoreRowModel,
+  getFacetedMinMaxValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
+import { DualRangeSlider } from "@/components/ui/dual-range-slider";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -74,6 +76,9 @@ const columns: ColumnDef<Channel>[] = [
     cell: ({ row }) => {
       const followerCount = parseInt(row.getValue("followerCount")).toLocaleString();
       return <div className="text-right font-medium">{followerCount}</div>;
+    },
+    meta: {
+      filterVariant: "range",
     },
   },
   {
@@ -151,6 +156,7 @@ export const DataTable = (props: {
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getFacetedMinMaxValues: getFacetedMinMaxValues(),
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination, // update the pagination state when internal APIs mutate the pagination state
     state: {
@@ -161,22 +167,53 @@ export const DataTable = (props: {
     },
   });
 
+  const column = table.getColumn("followerCount");
+  const [minFollowerCount, maxFollowerCount] =
+    column?.getFacetedMinMaxValues() ?? [0, 0];
+
+  const [followersLowerBound, setFollowersLowerBound] = React.useState(1);
+  const [followersUpperBound, setFollowersUpperBound] =
+    React.useState(maxFollowerCount);
+
+  React.useEffect(
+    () => setFollowersUpperBound(maxFollowerCount),
+    [maxFollowerCount]
+  );
+
   return (
     <div>
       <div className="flex items-center py-4">
         {data.length ? (
-          <Input
-            autoFocus
-            type="search"
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
-            }
-            className="w-[400px] cursor-pointer ring-violet-500 focus:ring-1 outline-none max-w-full bg-violet-50 border border-violet-200 text-violet-900 text-sm rounded focus:border-violet-300 block p-2 dark:bg-violet-950 dark:border-violet-600 dark:placeholder-violet-400 dark:text-violet-300"
-            placeholder={`Search ${
-              data.length ? `${data.length} ` : ""
-            }channel names`}
-          />
+          <>
+            <Input
+              autoFocus
+              type="search"
+              value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+              onChange={(event) =>
+                table.getColumn("name")?.setFilterValue(event.target.value)
+              }
+              className="w-[400px] cursor-pointer ring-violet-500 focus:ring-1 outline-none max-w-full bg-violet-50 border border-violet-200 text-violet-900 text-sm rounded focus:border-violet-300 block p-2 dark:bg-violet-950 dark:border-violet-600 dark:placeholder-violet-400 dark:text-violet-300"
+              placeholder={`Search ${
+                data.length ? `${data.length} ` : ""
+              }channel names`}
+            />
+            <div className="w-full px-2">
+              <DualRangeSlider
+                label={(value) => value}
+                labelPosition="bottom"
+                value={[followersLowerBound]}
+                onValueChange={(value: number[]) => {
+                  setFollowersLowerBound(value[0]);
+                  column?.setFilterValue([
+                    followersLowerBound,
+                    followersUpperBound,
+                  ]);
+                }}
+                min={minFollowerCount}
+                max={100}
+              />
+            </div>
+          </>
         ) : null}
       </div>
       <div className="rounded-md border">
