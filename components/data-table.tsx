@@ -206,10 +206,7 @@ export const DataTable = (props: {
                 value={[followersLowerBound]}
                 onValueChange={(value: number[]) => {
                   setFollowersLowerBound(value[0]);
-                  column?.setFilterValue([
-                    followersLowerBound,
-                    followersUpperBound,
-                  ]);
+                  column?.setFilterValue([value[0], followersUpperBound]);
                 }}
                 min={minFollowerCount}
                 max={100}
