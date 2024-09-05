@@ -196,8 +196,8 @@ export const DataTable = (props: {
               }
               className="w-[400px] cursor-pointer ring-violet-500 focus:ring-1 outline-none max-w-full bg-violet-50 border border-violet-200 text-violet-900 text-sm rounded focus:border-violet-300 block p-2 dark:bg-violet-950 dark:border-violet-600 dark:placeholder-violet-400 dark:text-violet-300"
               placeholder={`Search ${
-                data.length ? `${data.length} ` : ""
-              }channel names`}
+                table.getFilteredRowModel().rows.length
+              } channel names`}
             />
             <div className="w-full px-2">
               <DualRangeSlider
