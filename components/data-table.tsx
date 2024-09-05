@@ -52,9 +52,11 @@ const columns: ColumnDef<Channel>[] = [
     },
     cell: ({ row }) => (
       <div>
-        <div className="font-bold">{row.getValue("name")}</div>
-        <div className="text-violet-500 italic">/{row.original.id}</div>
-        {/* <div className="dark:text-violet-600 italic text-xs">{row.original.description}</div> */}
+        <div className="font-bold">
+          {row.getValue("name")}{" "}
+          <span className="text-violet-500 italic">/{row.original.id}</span>
+        </div>
+        <div className="dark:text-violet-600 italic text-xs max-w-[140px] truncate">{row.original.description}</div>
       </div>
     ),
   },
@@ -62,7 +64,7 @@ const columns: ColumnDef<Channel>[] = [
     accessorKey: "followerCount",
     header: ({ column }) => {
       return (
-        <div className="text-right">
+        <div className="w-[124px] text-right truncate">
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -75,7 +77,7 @@ const columns: ColumnDef<Channel>[] = [
     },
     cell: ({ row }) => {
       const followerCount = parseInt(row.getValue("followerCount")).toLocaleString();
-      return <div className="text-right font-medium">{followerCount}</div>;
+      return <div className="w-[124px] text-center font-medium">{followerCount}</div>; 
     },
     meta: {
       filterVariant: "range",
@@ -113,12 +115,12 @@ const channelLogo = (row: Row<Channel>) => {
   const { imageUrl, id } = row.original;
 
   return (
-    <div className="w-[36px] h-[36px] flex-shrink-0">
-      <div className="w-[36px] h-[36px] absolute">
+    <div className="w-[30px] h-[30px] flex-shrink-0">
+      <div className="w-[30px] h-[30px] absolute">
         <Image
           className="rounded-full"
           src={imageUrl}
-          sizes="(max-width: 768px) 36px, 36px"
+          sizes="(max-width: 768px) 30px, 30px"
           priority={index < 30}
           quality={75}
           alt={id}
