@@ -1,19 +1,17 @@
 "use client";
 
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { DataTable } from "@/components/data-table";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { GithubIcon } from "lucide-react";
-import { DataTable } from "@/components/data-table";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Channel } from "./types";
 
 export function Results() {

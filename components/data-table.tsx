@@ -1,23 +1,6 @@
 "use client";
 
-import * as React from "react";
-import Image from "next/image";
-import { ArrowUpDownIcon } from "lucide-react";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  PaginationState,
-  Row,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFacetedMinMaxValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { Channel } from "@/app/types";
 import { Button } from "@/components/ui/button";
 import { DualRangeSlider } from "@/components/ui/dual-range-slider";
 import {
@@ -40,7 +23,23 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Channel } from "@/app/types";
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  PaginationState,
+  Row,
+  SortingState,
+  flexRender,
+  getCoreRowModel,
+  getFacetedMinMaxValues,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { ArrowUpDownIcon } from "lucide-react";
+import Image from "next/image";
+import * as React from "react";
 
 const columns: ColumnDef<Channel>[] = [
   {
@@ -92,8 +91,12 @@ const columns: ColumnDef<Channel>[] = [
       );
     },
     cell: ({ row }) => {
-      const followerCount = parseInt(row.getValue("followerCount")).toLocaleString();
-      return <div className="w-[124px] text-center font-medium">{followerCount}</div>; 
+      const followerCount = parseInt(
+        row.getValue("followerCount")
+      ).toLocaleString();
+      return (
+        <div className="w-[124px] text-center font-medium">{followerCount}</div>
+      );
     },
     meta: {
       filterVariant: "range",
@@ -220,7 +223,9 @@ export const DataTable = (props: {
             <Input
               autoFocus
               type="search"
-              value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+              value={
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+              }
               onChange={(event) =>
                 table.getColumn("name")?.setFilterValue(event.target.value)
               }
