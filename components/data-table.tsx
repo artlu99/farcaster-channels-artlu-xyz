@@ -20,6 +20,11 @@ import {
 } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { DualRangeSlider } from "@/components/ui/dual-range-slider";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -57,13 +62,18 @@ const columns: ColumnDef<Channel>[] = [
       );
     },
     cell: ({ row }) => (
-      <div>
-        <div className="font-bold">
-          {row.getValue("name")}{" "}
-          <span className="text-violet-500 italic">/{row.original.id}</span>
-        </div>
-        <div className="dark:text-violet-600 italic text-xs max-w-[140px] truncate">{row.original.description}</div>
-      </div>
+      <HoverCard>
+        <HoverCardTrigger>
+          <div className="font-bold">
+            {row.getValue("name")}{" "}
+            <span className="text-violet-500 italic">/{row.original.id}</span>
+          </div>
+          <div className="dark:text-violet-600 italic text-xs max-w-[140px] truncate">
+            {row.original.description}
+          </div>
+        </HoverCardTrigger>
+        <HoverCardContent>{row.original.description}</HoverCardContent>
+      </HoverCard>
     ),
   },
   {
@@ -133,12 +143,12 @@ const channelLogo = (row: Row<Channel>) => {
   const { imageUrl, id } = row.original;
 
   return (
-    <div className="w-[30px] h-[30px] flex-shrink-0">
-      <div className="w-[30px] h-[30px] absolute">
+    <div className="w-[36px] h-[36px] flex-shrink-0">
+      <div className="w-[36px] h-[36px] absolute">
         <Image
           className="rounded-full"
           src={imageUrl}
-          sizes="(max-width: 768px) 30px, 30px"
+          sizes="(max-width: 768px) 36px, 36px"
           priority={index < 30}
           quality={75}
           alt={id}
