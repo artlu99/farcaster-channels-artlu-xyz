@@ -29,6 +29,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Channel } from "@/app/types";
 
 const columns: ColumnDef<Channel>[] = [
@@ -104,8 +110,20 @@ const columns: ColumnDef<Channel>[] = [
       // Format the timestamp in local time
       const date = new Date(timestamp * 1000);
       const formatted = date.toLocaleDateString();
+      const long = date.toLocaleString(undefined, { timeZoneName: "short" });
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div className="text-right font-medium">{formatted}</div>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>{long}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
     },
   },
 ];
@@ -143,7 +161,9 @@ export const DataTable = (props: {
     pageIndex: 0, // initial page index
     pageSize: 100,
   });
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = React.useState<SortingState>([
+    { desc: true, id: "createdAt" },
+  ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
