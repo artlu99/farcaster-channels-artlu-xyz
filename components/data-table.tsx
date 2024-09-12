@@ -39,6 +39,7 @@ import {
 } from "@tanstack/react-table";
 import { ArrowUpDownIcon } from "lucide-react";
 import Image from "next/image";
+import { debounce } from "radash";
 import * as React from "react";
 
 const columns: ColumnDef<Channel>[] = [
@@ -207,12 +208,35 @@ export const DataTable = (props: {
     column?.getFacetedMinMaxValues() ?? [0, 0];
 
   const [followersLowerBound, setFollowersLowerBound] = React.useState(1);
+  const [inputFormLowerBound, setInputFormLowerBound] = React.useState(1);
   const [followersUpperBound, setFollowersUpperBound] =
     React.useState(maxFollowerCount);
 
   React.useEffect(
     () => setFollowersUpperBound(maxFollowerCount),
     [maxFollowerCount]
+  );
+
+  const handleTextInput = React.useCallback(
+    (value: string) => {
+      const numValue = parseInt(value);
+      if (numValue > followersUpperBound) {
+        setInputFormLowerBound(followersUpperBound);
+      } else if (numValue < 1) {
+        setInputFormLowerBound(1);
+      } else {
+        setInputFormLowerBound(numValue);
+      }
+
+      setFollowersLowerBound(numValue);
+      column?.setFilterValue([numValue, followersUpperBound]);
+    },
+    [followersUpperBound, column]
+  );
+
+  const debouncedHandleTextInput = React.useMemo(
+    () => debounce({ delay: 300 }, (value: string) => handleTextInput(value)),
+    [handleTextInput]
   );
 
   return (
@@ -230,23 +254,37 @@ export const DataTable = (props: {
                 table.getColumn("name")?.setFilterValue(event.target.value)
               }
               className="w-[400px] cursor-pointer ring-violet-500 focus:ring-1 outline-none max-w-full bg-violet-50 border border-violet-200 text-violet-900 text-sm rounded focus:border-violet-300 block p-2 dark:bg-violet-950 dark:border-violet-600 dark:placeholder-violet-400 dark:text-violet-300"
-              placeholder={`Search ${
-                table.getFilteredRowModel().rows.length
-              } channel names`}
+              placeholder={`Search ${table
+                .getFilteredRowModel()
+                .rows.length.toLocaleString()} channels`}
             />
-            <div className="w-full px-2">
+            <div className="w-full px-4">
               <DualRangeSlider
-                label={(value) => value}
+                label={(value) =>
+                  value ? (value > 100 ? "100+" : value) : undefined
+                }
                 labelPosition="bottom"
                 value={[followersLowerBound]}
                 onValueChange={(value: number[]) => {
                   setFollowersLowerBound(value[0]);
                   column?.setFilterValue([value[0], followersUpperBound]);
+                  setInputFormLowerBound(value[0]);
                 }}
                 min={minFollowerCount}
                 max={100}
               />
             </div>
+            <Input
+              type="text"
+              value={inputFormLowerBound.toLocaleString()}
+              onChange={(event) => {
+                const value = event.target.value;
+                setInputFormLowerBound(parseInt(value) || 0);
+                debouncedHandleTextInput(value);
+              }}
+              className="w-[60px] cursor-pointer ring-violet-500 focus:ring-1 outline-none max-w-full bg-violet-50 border border-violet-200 text-violet-900 text-sm rounded focus:border-violet-300 block p-2 dark:bg-violet-950 dark:border-violet-600 dark:placeholder-violet-400 dark:text-violet-300"
+              placeholder={followersLowerBound.toLocaleString()}
+            />
           </>
         ) : null}
       </div>
