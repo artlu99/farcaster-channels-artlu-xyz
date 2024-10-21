@@ -9,6 +9,7 @@ export type Channel = {
   hostFids: number[];
   createdAt: number;
   followerCount: number;
+  memberCount: number;
 };
 
 // Neynar

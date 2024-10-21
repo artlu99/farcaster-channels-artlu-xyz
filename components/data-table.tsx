@@ -77,6 +77,33 @@ const columns: ColumnDef<Channel>[] = [
     ),
   },
   {
+    accessorKey: "memberCount",
+    header: ({ column }) => {
+      return (
+        <div className="w-[124px] text-right truncate">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDownIcon className="ml-2 h-4 w-4 mx-2" />
+            Members
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const memberCount = parseInt(
+        row.getValue("memberCount")
+      ).toLocaleString();
+      return (
+        <div className="w-[124px] text-center font-medium">{memberCount}</div>
+      );
+    },
+    meta: {
+      filterVariant: "range",
+    },
+  },
+  {
     accessorKey: "followerCount",
     header: ({ column }) => {
       return (
@@ -98,9 +125,6 @@ const columns: ColumnDef<Channel>[] = [
       return (
         <div className="w-[124px] text-center font-medium">{followerCount}</div>
       );
-    },
-    meta: {
-      filterVariant: "range",
     },
   },
   {
@@ -203,35 +227,35 @@ export const DataTable = (props: {
     },
   });
 
-  const column = table.getColumn("followerCount");
-  const [minFollowerCount, maxFollowerCount] =
+  const column = table.getColumn("memberCount");
+  const [minMemberCount, maxMemberCount] =
     column?.getFacetedMinMaxValues() ?? [0, 0];
 
-  const [followersLowerBound, setFollowersLowerBound] = React.useState(1);
+  const [membersLowerBound, setMembersLowerBound] = React.useState(1);
   const [inputFormLowerBound, setInputFormLowerBound] = React.useState(1);
-  const [followersUpperBound, setFollowersUpperBound] =
-    React.useState(maxFollowerCount);
+  const [membersUpperBound, setMembersUpperBound] =
+    React.useState(maxMemberCount);
 
   React.useEffect(
-    () => setFollowersUpperBound(maxFollowerCount),
-    [maxFollowerCount]
+    () => setMembersUpperBound(maxMemberCount),
+    [maxMemberCount]
   );
 
   const handleTextInput = React.useCallback(
     (value: string) => {
       const numValue = parseInt(value);
-      if (numValue > followersUpperBound) {
-        setInputFormLowerBound(followersUpperBound);
+      if (numValue > membersUpperBound) {
+        setInputFormLowerBound(membersUpperBound);
       } else if (numValue < 1) {
         setInputFormLowerBound(1);
       } else {
         setInputFormLowerBound(numValue);
       }
 
-      setFollowersLowerBound(numValue);
-      column?.setFilterValue([numValue, followersUpperBound]);
+      setMembersLowerBound(numValue);
+      column?.setFilterValue([numValue, membersUpperBound]);
     },
-    [followersUpperBound, column]
+    [membersUpperBound, column]
   );
 
   const debouncedHandleTextInput = React.useMemo(
@@ -264,13 +288,13 @@ export const DataTable = (props: {
                   value ? (value > 100 ? "100+" : value) : undefined
                 }
                 labelPosition="bottom"
-                value={[followersLowerBound]}
+                value={[membersLowerBound]}
                 onValueChange={(value: number[]) => {
-                  setFollowersLowerBound(value[0]);
-                  column?.setFilterValue([value[0], followersUpperBound]);
+                  setMembersLowerBound(value[0]);
+                  column?.setFilterValue([value[0], membersUpperBound]);
                   setInputFormLowerBound(value[0]);
                 }}
-                min={minFollowerCount}
+                min={minMemberCount}
                 max={100}
               />
             </div>
@@ -283,7 +307,7 @@ export const DataTable = (props: {
                 debouncedHandleTextInput(value);
               }}
               className="w-[60px] cursor-pointer ring-violet-500 focus:ring-1 outline-none max-w-full bg-violet-50 border border-violet-200 text-violet-900 text-sm rounded focus:border-violet-300 block p-2 dark:bg-violet-950 dark:border-violet-600 dark:placeholder-violet-400 dark:text-violet-300"
-              placeholder={followersLowerBound.toLocaleString()}
+              placeholder={membersLowerBound.toLocaleString()}
             />
           </>
         ) : null}
