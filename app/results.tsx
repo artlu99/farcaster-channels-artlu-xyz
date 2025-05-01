@@ -107,34 +107,6 @@ export function Results() {
                     <a
                       target="_blank"
                       rel="noopener noreferer"
-                      href={`https://opencast.stephancill.co.za/topic?url=${openChannelModal.url}`}
-                    >
-                      Opencast
-                    </a>
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="w-[140px] justify-start"
-                    asChild
-                  >
-                    <a
-                      target="_blank"
-                      rel="noopener noreferer"
-                      href={`https://u3.xyz/social/channel/${openChannelModal.id}`}
-                    >
-                      U3
-                    </a>
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="w-[140px] justify-start"
-                    asChild
-                  >
-                    <a
-                      target="_blank"
-                      rel="noopener noreferer"
                       href={`https://farcord.com/channels/${openChannelModal.id}`}
                     >
                       Farcord
@@ -163,9 +135,9 @@ export function Results() {
                     <a
                       target="_blank"
                       rel="noopener noreferer"
-                      href={`https://app.wildcard.lol/channel/${openChannelModal.id}`}
+                      href={`https://firefly.social/channel/farcaster/${openChannelModal.id}`}
                     >
-                      Wildcard
+                      Firefly
                     </a>
                   </Button>
                   <Button
